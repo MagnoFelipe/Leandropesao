@@ -82,7 +82,16 @@ const SmallContactCard: FC<SmallContactCardProps> = ({
         className={classNames("pl-2 flex items-center", className)}
         onClick={() => upsertContact({ address })}
       >
-        <PlusIcon className="mr-1 w-4 h-auto" />
+        <WalletAvatar
+          seed={address}
+          onlyEns
+          fallback={<PlusIcon className="mr-1 w-4 h-auto" />}
+          className={classNames(
+            "-my-1 h-4 w-4 min-w-4 mr-1",
+            "bg-black/40",
+            "rounded",
+          )}
+        />
         Save contact
       </InputLabelAction>
     );

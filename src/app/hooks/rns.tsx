@@ -88,12 +88,13 @@ const useRns = () => {
     } else {
       const rnsName = await lookupAddress(address);
 
+      const data = {
+        rnsName,
+        expirationTimestamp: Date.now() + ONE_DAY,
+      };
+      localStorage.setItem(`RNS_${address}`, JSON.stringify(data));
+
       if (rnsName) {
-        const data = {
-          rnsName,
-          expirationTimestamp: Date.now() + ONE_DAY,
-        };
-        localStorage.setItem(`RNS_${address}`, JSON.stringify(data));
         return rnsName;
       } else {
         return null;

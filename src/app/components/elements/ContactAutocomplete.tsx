@@ -15,6 +15,7 @@ import { FieldMetaState } from "react-final-form";
 import * as Popover from "@radix-ui/react-popover";
 import Fuse from "fuse.js";
 import { mergeRefs } from "react-merge-refs";
+import { useThrottledCallback } from "use-debounce";
 import { TReplace } from "lib/ext/i18n/react";
 import { useOnScreen } from "lib/react-hooks/useOnScreen";
 import { usePasteFromClipboard } from "lib/react-hooks/usePasteFromClipboard";
@@ -159,13 +160,17 @@ const ContactAutocomplete = forwardRef<
 
   const { paste } = usePasteFromClipboard(setValue);
 
-  const { getAddressByEns, watchEns } = useEns();
-  const { getAddressByRns, watchRns } = useRns();
+  const { watchEns } = useEns();
+  const { watchRns } = useRns();
 
-  useEffect(() => {
+  const watchDomain = useThrottledCallback(() => {
     watchEns(value, setValue);
     watchRns(value, setValue);
-  }, [value, setValue, getAddressByEns, watchEns, getAddressByRns, watchRns]);
+  }, 500);
+
+  useEffect(() => {
+    watchDomain();
+  }, [watchDomain, value]);
 
   const pasteButton = useMemo(() => {
     return (
