@@ -73,7 +73,7 @@ export const $syncPool = createStore<(number | string)[]>([])
 export const $syncStatus = $syncPool.map((pool) => Array.from(new Set(pool)));
 
 export const $approvals = createStore<Approval[]>([])
-  .on(unlocked, (_, { approvals }) => approvals ?? [])
+  .on(unlocked, (current, { approvals }) => [...current, ...(approvals ?? [])])
   .on(approvalAdded, (approvals, newApproval) => {
     if (newApproval.type === ActivityType.Connection) {
       const newApprovalOrigin = getPageOrigin(newApproval.source);
