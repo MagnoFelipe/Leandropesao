@@ -17,8 +17,8 @@ export const POLYGON: Network[] = [
     chainTag: "polygon",
     name: "Polygon",
     nativeCurrency: {
-      symbol: "MATIC",
-      name: "MATIC",
+      symbol: "POL",
+      name: "POL (ex-MATIC)",
       decimals: 18,
     },
     explorerUrls: ["https://polygonscan.com"],
