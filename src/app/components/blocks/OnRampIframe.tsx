@@ -217,6 +217,7 @@ const OnRampIframe: FC = () => {
           src={iframeUrl}
           allow="camera;microphone;payment"
           className="h-full w-[420px] border-none rounded-md"
+          referrerPolicy="no-referrer"
         />
       )}
     </div>
