@@ -17,7 +17,7 @@ import { getNetwork } from "core/common/network";
 
 import { DexPrices, getDexPrices } from "../../dexPrices";
 import { getBalanceFromChain } from "../../chain";
-import { fetchCxAccountTokens, indexerApi } from "../../indexer";
+import { CxToken, indexerApi } from "../../indexer";
 import { prepareAccountTokensSync } from "./utils";
 
 const DEAD_ADDRESS = "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000";
@@ -215,11 +215,18 @@ export const syncAccountAssets = memoize(
   },
 );
 
-export const fetchAccountTokens = (chainId: number, accountAddress: string) =>
-  fetchUxAccountTokens(chainId, accountAddress).catch((err) => {
-    console.warn("Using another indexer", err);
-    return fetchCxAccountTokens(chainId, accountAddress, TokenType.Asset);
-  });
+export const fetchAccountTokens = memoize(
+  (chainId: number, accountAddress: string) =>
+    fetchUxAccountTokens(chainId, accountAddress),
+  {
+    cacheKey: (args) => args.join("_"),
+    maxAge: 10_000, // 10 sec
+  },
+);
+// .catch((err) => {
+//   console.warn("Using another indexer", err);
+//   return fetchCxAccountTokens(chainId, accountAddress, TokenType.Asset);
+// });
 
 async function fetchUxAccountTokens(chainId: number, accountAddress: string) {
   if (!U_INDEXER_CHAINS.has(chainId)) {
@@ -233,10 +240,10 @@ async function fetchUxAccountTokens(chainId: number, accountAddress: string) {
         verified: true,
       },
     })
-    .then((r) => r.data);
+    .then((r) => r.data as CxToken[]);
 }
 
 const U_INDEXER_CHAINS = new Set([
   1, 56, 137, 42220, 8217, 25, 106, 42161, 43114, 50, 32769, 250, 122,
-  1313161554, 1088, 5000, 1101, 1284, 10, 8453,
+  1313161554, 1088, 5000, 1101, 1284, 10, 8453, 34443, 169,
 ]);

@@ -14,8 +14,8 @@ import * as repo from "core/repo";
 
 import { getCoinGeckoNativeTokenPrice } from "../dexPrices";
 import { getBalanceFromChain } from "../chain";
-import { indexerApi } from "../indexer";
 import { fetchTotalChainBalance } from "./total";
+import { fetchAccountTokens } from "./account/assets";
 
 export const syncNetworks = memoize(
   async (accountAddress: string, activeChainId: number) => {
@@ -198,19 +198,35 @@ export async function isFirstSync(accountAddress: string) {
 
 export const fetchAllUsedNetworks = withOfflineCache(
   async (accountAddress: string) => {
-    const res = await indexerApi.get(
-      `/c/v1/address/${accountAddress}/activity/`,
-      {
-        params: {
-          _authAddress: accountAddress,
-        },
-      },
+    const items = await Promise.all(
+      [
+        1, 56, 137, 25, 42161, 43114, 250, 122, 1313161554, 5000, 1101, 10,
+        8453,
+      ].map(async (chainId) => ({
+        chainId,
+        tokens: await fetchAccountTokens(chainId, accountAddress).catch(
+          () => [],
+        ),
+      })),
     );
 
-    const resItems = res.data?.data?.items ?? [];
-    const chainIds: number[] = resItems.map((item: any) => +item.chain_id);
+    return items
+      .filter(({ tokens }) => tokens.length > 0)
+      .map(({ chainId }) => chainId);
 
-    return chainIds;
+    // const res = await indexerApi.get(
+    //   `/c/v1/address/${accountAddress}/activity/`,
+    //   {
+    //     params: {
+    //       _authAddress: accountAddress,
+    //     },
+    //   },
+    // );
+
+    // const resItems = res.data?.data?.items ?? [];
+    // const chainIds: number[] = resItems.map((item: any) => +item.chain_id);
+
+    // return chainIds;
   },
   {
     key: ([address]) => `networks_${address}`,
