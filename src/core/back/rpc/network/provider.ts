@@ -61,7 +61,8 @@ export async function sendRpc(
 }
 
 const getRpcProvider = memoize(
-  (url: string, chainId: number) => new RpcProvider(url, chainId),
+  (url: string, chainId: number) =>
+    new RpcProvider(url, chainId, chainId === 1 ? false : true),
 );
 
 class RpcProvider extends ethers.JsonRpcProvider {
@@ -69,8 +70,11 @@ class RpcProvider extends ethers.JsonRpcProvider {
 
   getChainId = () => this.getNetwork().then(({ chainId }) => chainId);
 
-  constructor(url: string, chainId: number) {
-    super(url, chainId, { staticNetwork: ethers.Network.from(chainId) });
+  constructor(url: string, chainId: number, batchEnabled = true) {
+    super(url, chainId, {
+      staticNetwork: ethers.Network.from(chainId),
+      batchMaxCount: batchEnabled ? 100 : 1,
+    });
 
     // To use cache first provider._getBlock(), but without formatting
     // this.formatter = getRpcFormatter();

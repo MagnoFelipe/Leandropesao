@@ -67,7 +67,7 @@
     "effector": "23.2.2",
     "eth-phishing-detect": "1.2.0",
     "eth-rpc-errors": "4.0.3",
-    "ethers": "6.13.2",
+    "ethers": "6.13.4",
     "expiry-map": "2.0.0",
     "final-form": "4.20.10",
     "final-form-focus": "1.1.2",
