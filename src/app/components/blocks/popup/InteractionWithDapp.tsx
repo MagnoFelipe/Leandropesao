@@ -202,7 +202,7 @@ const InteractionWithDapp: FC<{ className?: string }> = ({ className }) => {
                   />
                 </div>
                 <span className="truncate min-w-0">
-                  {new URL(tabOrigin).host}
+                  {accountConnected ? new URL(tabOrigin).host : "Not connected"}
                 </span>
               </span>
             ) : (
