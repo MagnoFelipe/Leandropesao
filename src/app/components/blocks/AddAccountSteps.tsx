@@ -21,13 +21,10 @@ import AddWatchOnlyAccount from "../screens/addAccountSteps/AddWatchOnlyAccount"
 import ConfirmAccounts from "../screens/addAccountSteps/ConfirmAccounts";
 import EditAccounts from "../screens/addAccountSteps/EditAccounts";
 import SetupPassword from "../screens/addAccountSteps/SetupPassword";
-import DrumGameTarget from "../screens/addAccountSteps/DrumGameTarget";
 import Button from "../elements/Button";
 
 const ADD_ACCOUNT_STEPS: AllSteps<AddAccountStep> = [
   [AddAccountStep.AddAccountInitial, () => <AddAccountInitial />],
-
-  [AddAccountStep.DrumGameTarget, () => <DrumGameTarget />],
 
   [AddAccountStep.CreateSeedPhrase, () => <CreateSeedPhrase />],
   [AddAccountStep.ImportSeedPhrase, () => <ImportSeedPhrase />],
@@ -57,10 +54,7 @@ const AddAccountStepsNext = memo(() => {
         "h-full",
         "py-24 mmd:pt-20 mmd:pb-[3rem]",
         "flex flex-col",
-        accountStep === AddAccountStep.AddAccountInitial ||
-          accountStep === AddAccountStep.DrumGameTarget
-          ? "w-full px-3"
-          : "",
+        accountStep === AddAccountStep.AddAccountInitial ? "w-full px-3" : "",
       )}
     >
       <StepsProvider

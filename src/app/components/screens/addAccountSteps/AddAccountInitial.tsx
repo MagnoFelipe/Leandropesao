@@ -13,7 +13,6 @@ import { ReactComponent as ImportIcon } from "app/icons/addaccount-import.svg";
 import { ReactComponent as LedgerIcon } from "app/icons/addaccount-ledger.svg";
 import { ReactComponent as ChevronRightIcon } from "app/icons/chevron-right.svg";
 import { ReactComponent as SuccessGreen } from "app/icons/success-green.svg";
-import drumGameLogoUrl from "app/images/drum-game.png";
 
 import ConfirmAccounts from "./ConfirmAccounts";
 import LedgerScanModal from "./shared/LedgerScanModal";
@@ -70,20 +69,7 @@ const ChooseAddAccountWay = memo<{ onLedgerOpened?: () => void }>(
               stateRef.current.addSeedPhraseType = "craete";
               navigateToStep(AddAccountStep.CreateSeedPhrase);
             },
-          },
-          "divider",
-          {
-            title: existingApplication
-              ? "Drum Game target completed"
-              : "Complete Drum Game target",
-            description: existingApplication
-              ? `You added Telegram username: @${existingApplication.username} and finished game task`
-              : "Add your Telegram @username to finish game task",
-            promotional: existingApplication ? "completed" : true,
-            image: drumGameLogoUrl,
-            action: () => {
-              navigateToStep(AddAccountStep.DrumGameTarget);
-            },
+            image: null,
           },
           "divider",
           {
@@ -175,7 +161,6 @@ const ChooseAddAccountWay = memo<{ onLedgerOpened?: () => void }>(
                     ) : null}
                     <img
                       src={image}
-                      alt="Drum Game"
                       className={classNames(
                         "w-[2.75rem] min-w-[2.75rem] h-[2.75rem]",
                         "my-auto mx-1",

@@ -8,14 +8,12 @@ import { ReactComponent as OverviewIcon } from "app/icons/Overview.svg";
 import { ReactComponent as ReceiveIcon } from "app/icons/Receive.svg";
 import { ReactComponent as SendIcon } from "app/icons/Send.svg";
 import { ReactComponent as SwapIcon } from "app/icons/SwapIcon.svg";
-// import { ReactComponent as AppsIcon } from "app/icons/Apps.svg";
 import { ReactComponent as ContactsIcon } from "app/icons/Contacts.svg";
 import { ReactComponent as WalletsIcon } from "app/icons/Wallets.svg";
 import { ReactComponent as BuyIcon } from "app/icons/Buy-page.svg";
 import { ReactComponent as SettingsIcon } from "app/icons/Settings.svg";
 import { ReactComponent as SupportIcon } from "app/icons/Support.svg";
 import { ReactComponent as ActivityIcon } from "app/icons/ActivityIcon.svg";
-import { ReactComponent as RewardsIcon } from "app/icons/Rewards.svg";
 import * as SupportAlert from "app/components/elements/SupportAlert";
 import { useDialog } from "app/hooks/dialog";
 import { activityModalAtom, receiveModalAtom } from "app/atoms";
@@ -72,11 +70,11 @@ const useSidebarLinks = () => {
             page: "dashboard",
           }),
       },
-      {
-        route: Page.Rewards,
-        label: "Rewards",
-        Icon: RewardsIcon,
-      },
+      // {
+      //   route: Page.Rewards,
+      //   label: "Rewards",
+      //   Icon: RewardsIcon,
+      // },
       // {
       //   label: "Bug bounty",
       //   Icon: BugIcon,
