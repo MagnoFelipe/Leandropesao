@@ -62,7 +62,7 @@ export async function sendRpc(
 
 const getRpcProvider = memoize(
   (url: string, chainId: number) =>
-    new RpcProvider(url, chainId, chainId === 1 ? false : true),
+    new RpcProvider(url, chainId, !url.toLowerCase().includes("infura")),
 );
 
 class RpcProvider extends ethers.JsonRpcProvider {
